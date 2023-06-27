@@ -12,7 +12,7 @@ body{
 .red{
   color: red;
 }
-button {
+.btn {
   width: 120px;
   -webkit-border-radius: 25;
   -moz-border-radius: 25;
@@ -28,7 +28,7 @@ button {
   text-decoration: none;
 }
 
-button:hover {
+.btn:hover {
   background: #176B87;
   text-decoration: none;
 }
@@ -36,4 +36,18 @@ input{
   width: 120px;
   padding: 10px ;
   background-color: #DAFFFB;
+}
+#x{
+  background-color: #001C30;
+  border: none;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+#x::after{
+  content: "\00d7"; 
+  color: #fff;
+  font-weight: 300;
+  font-family: Arial, sans-serif;
+
 }

@@ -6,14 +6,19 @@ function App() {
 
   const [startingBalance, setStartingBalance] = useState(0);
   const [endingBalance, setEndingBalance] = useState(startingBalance);
-  const [transctions, setTransctions] = useState([ {name: 'Spotify', amount: 100, date: '06/22/2023'}, {name: 'Amazon', amount: 200, date: '06/12/2023'} ]);
+  const [transactions, setTransactions] = useState([ {name: 'Spotify', amount: 100, date: '06/22/2023' },
+  { name: 'Amazon', amount: 200, date: '06/12/2023'} ]);
 
   function onSubmitClick(e) {
     e.preventDefault();
     const budgetInput = document.getElementById('budget');
     const updatedBalance = budgetInput.value;
+    if (budgetInput.value === '') {
+      alert('Please enter a balance');
+      return;
+    }
     setStartingBalance(updatedBalance);
-    setEndingBalance(updatedBalance);
+    setEndingBalance(Number(updatedBalance));
     budgetInput.value = ''; // Clearing the input field
     }
   function onSpendClick(e) {
@@ -21,8 +26,14 @@ function App() {
     const spentAmount = document.getElementById('spending-amount');
     const spentDate = document.getElementById('spending-date');
     const spentOn = document.getElementById('spending-on');
+    if (spentAmount.value === '')
+    {
+      alert('Please enter a spent amount');
+      return;
+    }
+
     const newTransaction = {name: spentOn.value, amount: -parseFloat(spentAmount.value), date: spentDate.value};
-    setTransctions([...transctions, newTransaction]);
+    setTransactions([...transactions, newTransaction]);
     setEndingBalance(endingBalance + newTransaction.amount);
     spentAmount.value = '';
     spentDate.value = '';
@@ -34,20 +45,39 @@ function App() {
     const gainAmount = document.getElementById('gain-amount');
     const gainDate = document.getElementById('gain-date');
     const gainOn = document.getElementById('gain-from');
+    if (gainAmount.value === '')
+    {
+      alert('Please enter a gain amount');
+      return;
+    }
+
     const newTransaction = {name: gainOn.value, amount: parseFloat(gainAmount.value), date: gainDate.value};
-    setTransctions([...transctions, newTransaction]);
+    setTransactions([...transactions, newTransaction]);
     setEndingBalance(endingBalance + newTransaction.amount);
     gainAmount.value = '';
     gainDate.value = '';
     gainOn.value = '';
     }
     
-  return (
+    function onResetClick(e) {
+      e.preventDefault();
+      setTransactions([]);
+      setEndingBalance(Number(startingBalance));
+    }
+
+    function deleteTransaction(index) {
+      const updatedTransactions = [...transactions];
+      const deletedTransaction = updatedTransactions.splice(index, 1)[0];
+      setTransactions(updatedTransactions);
+      setEndingBalance(endingBalance - deletedTransaction.amount);
+    }  return (
     <>
-      <h1 className='title'>Budget tracker</h1>
+        <h1 className='title'>Budget tracker</h1>
+
+    <div className='input-group'>
       <div className='budget-div'>
-        <input id='budget' type="text" placeholder='Please enter your starting budget' />
-        <button id='budget-submit' onClick={onSubmitClick} >Submit</button>
+        <input id='budget' type="text" placeholder='Starting budget' />
+        <button className='btn' id='budget-submit' onClick={onSubmitClick} >Submit</button>
         <br />
       </div>
 
@@ -55,7 +85,7 @@ function App() {
         <input id='spending-amount' type="text" placeholder='spending amount' />
         <input id='spending-date' type="text" placeholder='Date mm/dd/yyyy' />
         <input id='spending-on' type="text" placeholder='Spent on' />
-        <button id='spending-submit' onClick={onSpendClick} >Spent</button>
+        <button className='btn' id='spending-submit' onClick={onSpendClick} >Spent</button>
         <br />
       </div>
 
@@ -63,9 +93,11 @@ function App() {
         <input id='gain-amount' type="text" placeholder='gain amount' />
         <input id='gain-date' type="text" placeholder='Date mm/dd/yyyy' />
         <input id='gain-from' type="text" placeholder='Gained from' />
-        <button id='gain-submit' onClick={onGainClick} >Gained</button>
+        <button className='btn' id='gain-submit' onClick={onGainClick} >Gained</button>
         <br />
       </div>
+
+    </div>
 
       <div className='transcations-div'>
         <h2>Transactions</h2>
@@ -79,21 +111,24 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {transctions
-            .sort((a, b) => new Date(b.date) - new Date(a.date)) //sorting by date
-            .map(transaction => (
-              <tr>
-                <td>{transaction.name}</td> 
-                <td className={transaction.amount >= 0 ? 'green' : 'red'}> ${transaction.amount}</td> 
-                <td className='date-format'>{transaction.date}</td>
-              </tr>
-            ))}
+                      {transactions
+              .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .map((transaction, index) => (
+                <tr key={index}>
+                  <td>{transaction.name}</td>
+                  <td className={transaction.amount >= 0 ? 'green' : 'red'}>${transaction.amount}</td>
+                  <td className="date-format">{transaction.date}</td>
+                  <td>
+                    <button id='x' onClick={() => deleteTransaction(index)}></button>
+                  </td>
+                </tr>
+              ))}
+
           </tbody>
         </table>
         <h3>Ending balance: ${endingBalance}</h3>
+        <button className='btn' id='reset-btn' onClick={onResetClick}>Reset</button>
       </div>
-
-
 
     </>
   )
