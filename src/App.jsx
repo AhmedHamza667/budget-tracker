@@ -111,7 +111,7 @@ function App() {
             </tr>
           </thead>
           <tbody>
-                      {transactions
+          {transactions
               .sort((a, b) => new Date(b.date) - new Date(a.date))
               .map((transaction, index) => (
                 <tr key={index}>
@@ -123,8 +123,7 @@ function App() {
                   </td>
                 </tr>
               ))}
-
-          </tbody>
+              </tbody>
         </table>
         <h3>Ending balance: ${endingBalance}</h3>
         <button className='btn' id='reset-btn' onClick={onResetClick}>Reset</button>
