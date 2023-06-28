@@ -1,0 +1,9 @@
+{
+  "transactions": [
+    {"name": "Spotify", "amount": 100, "date": "06/22/2023" },
+
+    {"name": "Amazon", "amount": 200, "date": "06/12/2023"},
+    {"name": "Apple", "amount": 300, "date": "06/12/2023"},
+    {"name": "Google", "amount": 400, "date": "06/12/2023"}
+  ]
+}

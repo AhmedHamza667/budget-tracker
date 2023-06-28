@@ -1,2 +1,38 @@
 add catagories and analysis results
 Style the page
+handle escape
+push to database
+
+
+{modalVisible && (
+          
+        <div className="modal">
+          <form>
+      <div className='budget-div'>
+        <input id='budget' type="text" placeholder='Starting budget' />
+        <button className='btn' id='budget-submit' onClick={onSubmitClick} >Submit</button>
+        <br />
+      </div>
+
+      <div className='spent-div'>
+        <input id='spending-amount' type="text" placeholder='spending amount' />
+        <input id='spending-date' type="text" placeholder='Date mm/dd/yyyy' />
+        <input id='spending-on' type="text" placeholder='Spent on' />
+        <button className='btn' id='spending-submit' onClick={onSpendClick} >Spent</button>
+        <br />
+      </div>
+
+      <div className='gain-div'>
+        <input id='gain-amount' type="text" placeholder='gain amount' />
+        <input id='gain-date' type="text" placeholder='Date mm/dd/yyyy' />
+        <input id='gain-from' type="text" placeholder='Gained from' />
+        <button className='btn' id='gain-submit' onClick={onGainClick} >Gained</button>
+        <br />
+      </div>
+
+          </form>
+          <button className='btn close-btn' onClick={() => setIsModalVisible(false)}>Close</button>
+        </div>
+      )
+      
+      }
