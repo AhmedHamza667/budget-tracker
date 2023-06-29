@@ -18,6 +18,8 @@ function App() {
     setTransactions(initTrans);
   }
 
+
+
   function onSubmitClick(updatedBalance) {
     setStartingBalance(parseFloat(updatedBalance));
     setEndingBalance(parseFloat(updatedBalance));
@@ -33,6 +35,7 @@ function App() {
 
     setTransactions([...transactions, newTransaction]);
     setEndingBalance(endingBalance - spentAmount);
+    setIsModalVisible(false);
   }
 
   function onGainClick(gainAmount, gainDate, gainFrom) {
@@ -44,6 +47,7 @@ function App() {
 
     setTransactions([...transactions, newTransaction]);
     setEndingBalance(endingBalance + gainAmount);
+    setIsModalVisible(false);
   }
 
   function onResetClick(e) {
@@ -61,14 +65,6 @@ function App() {
 
   return (
     <>
-      <h1 className="title">Budget tracker</h1>
-      <div className="flex justify-between mb-4">
-        <div>
-          <button className="btn" onClick={() => setIsModalVisible(true)}>
-            + Add
-          </button>
-        </div>
-      </div>
       <Modal
         isVisible={modalVisible}
         hideModal={() => setIsModalVisible(false)}
@@ -76,16 +72,24 @@ function App() {
         onSpendClick={onSpendClick}
         onGainClick={onGainClick}
       />
-
+      <div className='parent-container'>
+      <h1 className="title">Budget tracker</h1>
       <div className="transactions-div">
         <h2>Transactions</h2>
+        <div>
+        <button className="btn add-btn" onClick={() => setIsModalVisible(true)}>
+          + Add
+        </button>
+      </div>
+
         <h3>Starting balance: ${startingBalance}</h3>
         <table id="transactions-table">
-          <thead>
+          <thead className='th'>
             <tr>
               <th>Transaction</th>
               <th>Amount</th>
               <th>Date</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -109,6 +113,8 @@ function App() {
         <button className="btn" id="reset-btn" onClick={onResetClick}>
           Reset
         </button>
+      </div>
+
       </div>
     </>
   );

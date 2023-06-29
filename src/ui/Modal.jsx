@@ -1,6 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 function Modal({ isVisible, hideModal, onSubmitClick, onSpendClick, onGainClick }) {
+  useEffect(() => {
+    function handleEscapeKeyPress(event) {
+      if (event.key === 'Escape') {
+        hideModal();
+      }
+    }
+
+    document.addEventListener('keydown', handleEscapeKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKeyPress);
+    };
+  }, [hideModal]);
+
+  
   if (!isVisible) return null;
 
   function handleSubmitClick(e) {
@@ -82,6 +97,9 @@ function Modal({ isVisible, hideModal, onSubmitClick, onSpendClick, onGainClick 
           <br />
         </div>
       </form>
+      
+      
+
       <button className="btn close-btn" onClick={hideModal}>
         Close
       </button>

@@ -3,8 +3,12 @@ body{
   background-color: #001C30;
   color: #176B87;
 }
-.title{
-  color: #64CCC5;
+.title {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
 }
 .green{
   color: green;
@@ -39,18 +43,23 @@ input{
   background-color: #DAFFFB;
 }
 #x{
-  background-color: #001C30;
+  background-color: transparent !important;
   border: none;
   width: 30px;
   height: 30px;
   cursor: pointer;
+  text-align: end;
 }
 #x::after{
   content: "\00d7"; 
   color: #fff;
   font-weight: 300;
   font-family: Arial, sans-serif;
-
+}
+#reset-btn{
+  position: absolute;
+  right: 20px;
+  bottom: 15px;
 }
 .modal {
   display: flex;
@@ -72,4 +81,66 @@ input{
   position: absolute;
   bottom: 20px;
   right: 20px;
+}
+
+.parent-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+.transactions-div {
+  position: relative;
+  width: 25%;
+  display: grid;
+  justify-content: center;
+  border: 1px solid #64ccc5;
+  border-style: dotted ;
+  padding: 10px;
+  margin: 10px; 
+}
+#transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#transactions-table th {
+  background-color: #64ccc5;
+  color: white;
+  padding: 10px;
+  text-align: left;
+
+}
+
+
+#transactions-table td {
+  padding: 10px;
+}
+
+#transactions-table tbody tr:nth-child(even) {
+  background-color: #0b3644;
+}
+
+
+#transactions-table tbody tr:hover {
+  color: white;
+}
+
+.date-format {
+  font-family: Consolas, monaco, monospace;
+}
+
+.date-format::before {
+  content: '(';
+}
+
+.date-format::after {
+  content: ')';
+}
+.add-btn{
+  position: absolute;
+  right: 20px;
+  top: 20px;
 }
