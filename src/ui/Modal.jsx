@@ -1,17 +1,27 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
+
+
 
 function Modal({ isVisible, hideModal, onSubmitClick, onSpendClick, onGainClick }) {
+  let ModalRef = useRef();
   useEffect(() => {
+    function handleClickOutsideModal(event) {
+      if (!ModalRef.current.contains(event.target)){
+        hideModal();
+      }
+    }
+
     function handleEscapeKeyPress(event) {
       if (event.key === 'Escape') {
         hideModal();
       }
     }
-
+    document.addEventListener('mousedown', handleClickOutsideModal);
     document.addEventListener('keydown', handleEscapeKeyPress);
 
     return () => {
       document.removeEventListener('keydown', handleEscapeKeyPress);
+      document.removeEventListener('mousedown', handleClickOutsideModal);
     };
   }, [hideModal]);
 
@@ -67,8 +77,8 @@ function Modal({ isVisible, hideModal, onSubmitClick, onSpendClick, onGainClick 
   }
 
   return (
-    <div className="modal">
-      <form>
+    <div className="modal" >
+      <form ref={ModalRef}>
         <div className="budget-div">
           <input id="budget" type="text" placeholder="Starting budget" />
           <button className="btn" id="budget-submit" onClick={handleSubmitClick}>
@@ -96,13 +106,7 @@ function Modal({ isVisible, hideModal, onSubmitClick, onSpendClick, onGainClick 
           </button>
           <br />
         </div>
-      </form>
-      
-      
-
-      <button className="btn close-btn" onClick={hideModal}>
-        Close
-      </button>
+      </form>  
     </div>
   );
 }

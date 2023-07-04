@@ -5,9 +5,13 @@ body{
 }
 .title {
   position: absolute;
-  top: 30px;
+  top: 40px;
   left: 50%;
   transform: translateX(-50%);
+  text-decoration: none;
+  color: #176B87;
+  display: block;
+  font-size: 25px;
   z-index: 2;
 }
 .green{
@@ -143,4 +147,17 @@ input{
   position: absolute;
   right: 20px;
   top: 20px;
+}
+#error-page {
+  padding-top: 370px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: larger;
+  width: 100%;
+  color: red;
+}
+.edit-btn{
+  color: #176B87;
 }
