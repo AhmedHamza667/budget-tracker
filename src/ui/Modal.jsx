@@ -1,5 +1,4 @@
 import React, {useEffect, useRef} from 'react';
-import { Link } from 'react-router-dom';
 
 
 
@@ -79,9 +78,6 @@ function Modal({ isVisible, hideModal, onSubmitClick, onAddClick }) {
           <button className="btn" id="gain-submit" onClick={handleAddClick}>
             Add
           </button>
-          <Link to= {'../'}>
-          <h1>go back</h1>
-          </Link>
           <br />
         </div>
       </form>  

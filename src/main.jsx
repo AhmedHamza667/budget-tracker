@@ -7,7 +7,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Root from './routes/Root';
-// import Add from "./routes/Add";
 import Edit from "./routes/Edit";
 import Note from "./routes/Note";
 
@@ -23,13 +22,9 @@ const router = createBrowserRouter([
     element: <Root />,
   },
   {
-    path: "/edit",
+    path: "/edit/:id",
     element: <Edit />,
   },
-  // {
-  //   path: "/add",
-  //   element: <Add />,
-  // },
   {
     path: "*",
     element: <Note />,

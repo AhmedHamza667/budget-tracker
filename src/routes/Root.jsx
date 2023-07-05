@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import '../index.css';
 import Modal from '../ui/Modal';
 import { Link } from 'react-router-dom';
@@ -8,6 +7,7 @@ import { AiOutlineHome, AiOutlineEdit } from "react-icons/ai";
 
 
 export default function Root() {
+  
     const [startingBalance, setStartingBalance] = useState(0);
     const [endingBalance, setEndingBalance] = useState(startingBalance);
     const [modalVisible, setIsModalVisible] = useState(false);
@@ -15,8 +15,12 @@ export default function Root() {
   
     useEffect(() => {
       fetchTransactions();
-    }, []);
+    }, [transactions]);
   
+    useEffect(() => {
+      calculateEndingBalance();
+    }, [transactions]);
+
     async function fetchTransactions() {
       const response = await fetch('http://localhost:3000/transactions');
       const initTrans = await response.json();
@@ -60,21 +64,53 @@ export default function Root() {
   
       setTransactions([...transactions, newTransaction]);
       pushTransaction(newTransaction);
-      setEndingBalance(endingBalance + amount);
       setIsModalVisible(false);
     }
   
+
+    async function deleteAllTransactions() {
+      const response = await fetch('http://localhost:3000/transactions', {
+        method: 'DELETE',
+      });
+  
+      if (response.ok) {
+        setTransactions([]);
+        setEndingBalance(parseFloat(startingBalance));
+      } else {
+        console.log('Error deleting transactions');
+      }
+    }
     function onResetClick(e) {
       e.preventDefault();
-      setTransactions([]);
-      setEndingBalance(parseFloat(startingBalance));
+      deleteAllTransactions();
     }
   
-    function deleteTransaction(index) {
-      const updatedTransactions = [...transactions];
-      const deletedTransaction = updatedTransactions.splice(index, 1)[0];
-      setTransactions(updatedTransactions);
-      setEndingBalance(endingBalance - deletedTransaction.amount);
+    function deleteTransaction(id) {
+      fetch(`http://localhost:3000/transactions/${id}`, {
+      method: 'DELETE',
+     })
+     .then(response => {
+      if (response.ok) {
+        // Transaction deleted successfully
+        const updatedTransactions = transactions.filter(transaction => transaction.id !== id);
+        const deletedTransaction = transactions.find(transaction => transaction.id === id);
+        setTransactions(updatedTransactions);
+        setEndingBalance(endingBalance - deletedTransaction.amount);
+      } else {
+        // transaction deletion failed
+      }
+    })
+    .catch(error => {
+      console.log('Error deleting transaction:', error);
+    });
+    }
+  
+    function calculateEndingBalance() {
+      let balance = startingBalance;
+      transactions.forEach(transaction => {
+        balance += transaction.amount;
+      });
+      setEndingBalance(balance);
     }
   
     return (
@@ -113,17 +149,17 @@ export default function Root() {
               {transactions
                 .sort((a, b) => new Date(b.date) - new Date(a.date))
                 .map((transaction, index) => (
-                  <tr key={index}>
+                  <tr key={transaction.id}>
                     <td>{transaction.name}</td>
                     <td className={transaction.amount >= 0 ? 'green' : 'red'}>
                       ${transaction.amount}
                     </td>
                     <td className="date-format">{transaction.date}</td>
                     <td>
-                      <button id="x" onClick={() => deleteTransaction(index)}></button>
+                      <button id="x" onClick={() => deleteTransaction(transaction.id)}></button>
                     </td>
                     <td>
-                      <Link to={`http://localhost:3000/transactions/${index}`}>
+                      <Link to={`/edit/${transaction.id}`}>
                         <AiOutlineEdit className='edit-btn'/>
                       </Link>
                     </td>
