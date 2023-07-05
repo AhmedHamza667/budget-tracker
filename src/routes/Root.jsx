@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { AiOutlineHome, AiOutlineEdit } from "react-icons/ai";
 
 
+
 export default function Root() {
     const [startingBalance, setStartingBalance] = useState(0);
     const [endingBalance, setEndingBalance] = useState(startingBalance);
@@ -49,29 +50,17 @@ export default function Root() {
       setIsModalVisible(false);
     }
   
-    function onSpendClick(spentAmount, spentDate, spentOn) {
+  
+    function onAddClick(amount, date, from) {
       const newTransaction = {
-        name: spentOn,
-        amount: -spentAmount,
-        date: spentDate,
+        name: from,
+        amount: amount,
+        date: date,
       };
   
       setTransactions([...transactions, newTransaction]);
       pushTransaction(newTransaction);
-      setEndingBalance(endingBalance - spentAmount);
-      setIsModalVisible(false);
-    }
-  
-    function onGainClick(gainAmount, gainDate, gainFrom) {
-      const newTransaction = {
-        name: gainFrom,
-        amount: gainAmount,
-        date: gainDate,
-      };
-  
-      setTransactions([...transactions, newTransaction]);
-      pushTransaction(newTransaction);
-      setEndingBalance(endingBalance + gainAmount);
+      setEndingBalance(endingBalance + amount);
       setIsModalVisible(false);
     }
   
@@ -94,8 +83,7 @@ export default function Root() {
         isVisible={modalVisible}
         hideModal={() => setIsModalVisible(false)}
         onSubmitClick={onSubmitClick}
-        onSpendClick={onSpendClick}
-        onGainClick={onGainClick}
+        onAddClick={onAddClick}
          />
         <div className='parent-container'>
         <Link to={'/home'} className="title">
@@ -135,7 +123,7 @@ export default function Root() {
                       <button id="x" onClick={() => deleteTransaction(index)}></button>
                     </td>
                     <td>
-                      <Link to={'/edit'} trans = {transactions}>
+                      <Link to={`http://localhost:3000/transactions/${index}`}>
                         <AiOutlineEdit className='edit-btn'/>
                       </Link>
                     </td>

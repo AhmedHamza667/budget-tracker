@@ -1,8 +1,9 @@
 import React, {useEffect, useRef} from 'react';
+import { Link } from 'react-router-dom';
 
 
 
-function Modal({ isVisible, hideModal, onSubmitClick, onSpendClick, onGainClick }) {
+function Modal({ isVisible, hideModal, onSubmitClick, onAddClick }) {
   let ModalRef = useRef();
   useEffect(() => {
     function handleClickOutsideModal(event) {
@@ -40,40 +41,22 @@ function Modal({ isVisible, hideModal, onSubmitClick, onSpendClick, onGainClick 
     budgetInput.value = ''; // Clearing the input field
   }
 
-  function handleSpendClick(e) {
+  function handleAddClick(e) {
     e.preventDefault();
-    const spentAmountInput = document.getElementById('spending-amount');
-    const spentDateInput = document.getElementById('spending-date');
-    const spentOnInput = document.getElementById('spending-on');
-    if (spentAmountInput.value === '') {
-      alert('Please enter a spent amount');
+    const AmountInput = document.getElementById('amount');
+    const DateInput = document.getElementById('date');
+    const FromInput = document.getElementById('from');
+    if (AmountInput.value === '') {
+      alert('Please enter an amount');
       return;
     }
-    const spentAmount = parseFloat(spentAmountInput.value);
-    const spentDate = spentDateInput.value;
-    const spentOn = spentOnInput.value;
-    onSpendClick(spentAmount, spentDate, spentOn);
-    spentAmountInput.value = '';
-    spentDateInput.value = '';
-    spentOnInput.value = '';
-  }
-
-  function handleGainClick(e) {
-    e.preventDefault();
-    const gainAmountInput = document.getElementById('gain-amount');
-    const gainDateInput = document.getElementById('gain-date');
-    const gainFromInput = document.getElementById('gain-from');
-    if (gainAmountInput.value === '') {
-      alert('Please enter a gain amount');
-      return;
-    }
-    const gainAmount = parseFloat(gainAmountInput.value);
-    const gainDate = gainDateInput.value;
-    const gainFrom = gainFromInput.value;
-    onGainClick(gainAmount, gainDate, gainFrom);
-    gainAmountInput.value = '';
-    gainDateInput.value = '';
-    gainFromInput.value = '';
+    const Amount = parseFloat(AmountInput.value);
+    const Date = DateInput.value;
+    const From = FromInput.value;
+    onAddClick(Amount, Date, From);
+    AmountInput.value = '';
+    DateInput.value = '';
+    FromInput.value = '';
   }
 
   return (
@@ -87,23 +70,18 @@ function Modal({ isVisible, hideModal, onSubmitClick, onSpendClick, onGainClick 
           <br />
         </div>
 
-        <div className="spent-div">
-          <input id="spending-amount" type="text" placeholder="Spending amount" />
-          <input id="spending-date" type="text" placeholder="Date mm/dd/yyyy" />
-          <input id="spending-on" type="text" placeholder="Spent on" />
-          <button className="btn" id="spending-submit" onClick={handleSpendClick}>
-            Spent
-          </button>
-          <br />
-        </div>
+        
 
         <div className="gain-div">
-          <input id="gain-amount" type="text" placeholder="Gain amount" />
-          <input id="gain-date" type="text" placeholder="Date mm/dd/yyyy" />
-          <input id="gain-from" type="text" placeholder="Gained from" />
-          <button className="btn" id="gain-submit" onClick={handleGainClick}>
-            Gained
+          <input id="amount" type="text" placeholder="Amount" />
+          <input id="date" type="text" placeholder="Date mm/dd/yyyy" />
+          <input id="from" type="text" placeholder="Name" />
+          <button className="btn" id="gain-submit" onClick={handleAddClick}>
+            Add
           </button>
+          <Link to= {'../'}>
+          <h1>go back</h1>
+          </Link>
           <br />
         </div>
       </form>  
