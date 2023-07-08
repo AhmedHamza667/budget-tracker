@@ -2,27 +2,27 @@
   "transactions": [
     {
       "name": "Spotify",
-      "amount": 88,
+      "amount": -20,
       "date": "06/22/2023",
       "id": 0
     },
     {
       "name": "Amazon",
-      "amount": 200,
-      "date": "06/12/2023",
+      "amount": 205,
+      "date": "06/13/2023",
       "id": 1
-    },
-    {
-      "name": "Apple",
-      "amount": 300,
-      "date": "06/12/2023",
-      "id": 2
     },
     {
       "name": "Google",
       "amount": 300,
       "date": "06/22/2023",
       "id": 3
+    },
+    {
+      "name": "Work",
+      "amount": 300,
+      "date": "07/07/2023",
+      "id": 4
     }
   ]
 }

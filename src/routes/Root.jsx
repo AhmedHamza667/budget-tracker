@@ -68,22 +68,7 @@ export default function Root() {
     }
   
 
-    async function deleteAllTransactions() {
-      const response = await fetch('http://localhost:3000/transactions', {
-        method: 'DELETE',
-      });
-  
-      if (response.ok) {
-        setTransactions([]);
-        setEndingBalance(parseFloat(startingBalance));
-      } else {
-        console.log('Error deleting transactions');
-      }
-    }
-    function onResetClick(e) {
-      e.preventDefault();
-      deleteAllTransactions();
-    }
+
   
     function deleteTransaction(id) {
       fetch(`http://localhost:3000/transactions/${id}`, {
@@ -121,11 +106,11 @@ export default function Root() {
         onSubmitClick={onSubmitClick}
         onAddClick={onAddClick}
          />
-        <div className='parent-container'>
-        <Link to={'/home'} className="title">
+         <Link to={'/home'} className="title">
           <AiOutlineHome />
           Budget tracker
         </Link>
+        <div className='parent-container'>
         <div className="transactions-div">
           <h2>Transactions</h2>
           <div>
@@ -168,9 +153,6 @@ export default function Root() {
             </tbody>
           </table>
           <h3>Ending balance: ${endingBalance}</h3>
-          <button className="btn" id="reset-btn" onClick={onResetClick}>
-            Reset
-          </button>
         </div>
   
         </div>

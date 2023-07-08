@@ -89,6 +89,8 @@ input{
 
 .parent-container {
   display: flex;
+  flex-direction: column;
+  margin-top: 70px;
   justify-content: center;
   align-items: center;
   height: 70vh;
@@ -102,7 +104,10 @@ input{
   border: 1px solid #64ccc5;
   border-style: dotted ;
   padding: 10px;
-  margin: 10px; 
+  margin: 10px;
+  min-height: 200px; /* Set a minimum height */
+  max-height: 700px;
+  overflow-y: auto; /* Enable vertical scroll when content exceeds the height */
 }
 #transactions-table {
   width: 100%;
@@ -165,4 +170,32 @@ input{
   width: 80px;
   height: 26px;
   text-align: center;
+}
+/* ... Existing styles ... */
+
+@media screen and (max-width: 768px) {
+  .parent-container {
+    margin-top: 40px;
+    padding: 0 10px;
+  }
+  
+  .transactions-div {
+    max-width: 90%;
+    overflow-x: hidden;
+  }
+  
+  #transactions-table {
+    font-size: 14px;
+    max-width: 100%;
+  }
+  
+  .btn {
+    font-size: 16px;
+    width: 100%;
+  }
+  
+  .title {
+    font-size: 20px;
+    top: 20px;
+  }
 }
